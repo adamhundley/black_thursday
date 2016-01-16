@@ -65,4 +65,10 @@ attr_reader :se, :invoice_repo
   def test_find_all_by_status_returns_array_of_returned_invoices
     assert_equal 4, invoice_repo.find_all_by_status(:returned).count
   end
+####################################################
+  # def test_find_all_by_day_returns_array_of_days
+  #
+  #  assert_equal 4, invoice_repo.find_all_by_day("2012-02-06 07:56:57 UTC").count
+  # end
+
 end

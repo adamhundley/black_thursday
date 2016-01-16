@@ -62,8 +62,8 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_average_average_price_per_merchant
-    assert_equal 439.2, sasd.average_average_price_per_merchant.to_f
-    assert_equal BigDecimal, sasd.average_average_price_per_merchant.class
+    assert_equal 251.79, sa.average_average_price_per_merchant.to_f
+    assert_equal BigDecimal, sa.average_average_price_per_merchant.class
   end
 
   def test_average_price_of_all_items
@@ -126,26 +126,38 @@ class SalesAnalystTest < Minitest::Test
     assert_equal [], sa.bottom_merchants_by_invoice_count
   end
 
-  def test_day_of_invoices_returns_array_of_days
+  def test_day_of_invoices_returns_array_of_all_days
 
+    assert_equal 61, sa.day_of_invoice.count
   end
 
-  def test_group_invoices_by_day_returns_array_of_all_invoices_on_given_day
+  def test_group_invoices_by_day_returns_hash_of_arrays
+    assert_equal 7, sa.group_invoices_by_day.count
   end
 
   def test_counts_invoices_by_day_returns_array_of_day_totals
+    assert_equal 1, sa.count_invoices_by_day[:Friday]
   end
 
   def test_average_invoices_per_day_returns_float_of_mean_count
+    assert_equal 8.71, sa.average_invoices_per_day
   end
 
   def test_variance_of_invoices_per_day_from_average_squared_returns_float
+    assert_equal 273.43 , sa.variance_of_invoices_per_day_from_average_squared
   end
 
   def test_variance_divided_by_total_invoices_returns_float
+    assert_equal 45.57, sa.variance_divided_by_total_invoices
+
   end
 
   def test_sd_of_invoices_per_day_returns_float
+    assert_equal 6.75, sa.sd_of_invoices_per_day
+  end
+
+  def test_top_days_by_invoice_count_returns_array_of_days_more_than_one_sd_above_mean
+    assert_equal 1, sa.top_days_by_invoice_count.count
   end
 
 end

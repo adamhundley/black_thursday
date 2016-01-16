@@ -41,5 +41,8 @@ attr_reader :all
     all.find_all { |x| x.status == status }
   end
 
+  # def find_all_by_day(created_at)
+  #   all.find_all { |x| x.created_at.strftime("A") == created_at.strftime("%A") }
+  # end
 
 end

@@ -25,7 +25,7 @@ attr_reader :sales_engine, :items, :merchants, :invoices
   end
 
   def variances_of_averages_divided_by_totals(variance, total)
-    variance/(total - 1)
+    (variance/(total - 1)).round(2)
   end
 
   def average_items_per_merchant
@@ -52,17 +52,18 @@ attr_reader :sales_engine, :items, :merchants, :invoices
   end
 
   def average_item_price_for_merchant(merchant_id)
-    found_items = items.find_all_by_merchant_id(merchant_id)
-    count = found_items.count
-    if count > 0
-      (found_items.reduce(0) { |sum, item| item.unit_price + sum } / count).to_f.round(2)
-    end
+      found_items = items.find_all_by_merchant_id(merchant_id)
+      count = found_items.count
+      if count > 0
+        (found_items.reduce(0) { |sum, item| item.unit_price + sum } / count).round(2)
+      end
   end
-#THIS NEEDS CHANGE###################################
+
   def average_average_price_per_merchant
-    ((merchants.all.map { |merchant| average_item_price_for_merchant(merchant.id) }.inject(:+))/total_merchants).round(2)
+    avg = merchants.all.map { |merchant| average_item_price_for_merchant(merchant.id)}.compact
+    (avg.inject(:+)/total_merchants).round(2)
   end
-#####################################################
+
   def average_price_of_all_items
     (items.all.reduce(0) { |sum, item| item.unit_price + sum}/total_items).to_f.round(2)
   end
@@ -132,31 +133,41 @@ attr_reader :sales_engine, :items, :merchants, :invoices
     merchants.all.map { |merchant| merchant if merchant.invoices.count <= (avg - (sd * 2)) }.compact
   end
 
-  def top_days_by_invoice_count
-
-  end
-
   def day_of_invoice
-    invoices.all.map { |invoice| invoice.created_at.wday}
+    invoices.all.map { |invoice| invoice.created_at.strftime("%A").to_sym }
   end
 
   def group_invoices_by_day
-
+    day_of_invoice.group_by { |day| day }
   end
 
   def count_invoices_by_day
+    group_invoices_by_day.map { |k, v| [k, v.count] }.to_h
   end
 
   def average_invoices_per_day
+    average_calculator(total_invoices, 7)
   end
 
   def variance_of_invoices_per_day_from_average_squared
+    avg = average_invoices_per_day
+    count_invoices_by_day.values.map { |v| ((v - avg) ** 2) }.inject(:+).round(2)
   end
 
   def variance_divided_by_total_invoices
+    variance = variance_of_invoices_per_day_from_average_squared
+    total = 7
+    variances_of_averages_divided_by_totals(variance, total)
   end
 
   def sd_of_invoices_per_day
+    standard_deviation(variance_divided_by_total_invoices)
+  end
+
+  def top_days_by_invoice_count
+    sd = sd_of_invoices_per_day
+    avg = average_invoices_per_day
+    count_invoices_by_day.map { |day , value| day if value > (avg + sd) }.compact
   end
 
 
