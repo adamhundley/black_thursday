@@ -54,7 +54,9 @@ attr_reader :sales_engine, :items, :merchants, :invoices
   def average_item_price_for_merchant(merchant_id)
     found_items = items.find_all_by_merchant_id(merchant_id)
     count = found_items.count
-    (found_items.reduce(0) { |sum, item| item.unit_price + sum } / count).round(2)
+    if count > 0
+      (found_items.reduce(0) { |sum, item| item.unit_price + sum } / count).to_f.round(2)
+    end
   end
 #THIS NEEDS CHANGE###################################
   def average_average_price_per_merchant
@@ -133,5 +135,29 @@ attr_reader :sales_engine, :items, :merchants, :invoices
   def top_days_by_invoice_count
 
   end
+
+  def day_of_invoice
+    invoices.all.map { |invoice| invoice.created_at.wday}
+  end
+
+  def group_invoices_by_day
+
+  end
+
+  def count_invoices_by_day
+  end
+
+  def average_invoices_per_day
+  end
+
+  def variance_of_invoices_per_day_from_average_squared
+  end
+
+  def variance_divided_by_total_invoices
+  end
+
+  def sd_of_invoices_per_day
+  end
+
 
 end

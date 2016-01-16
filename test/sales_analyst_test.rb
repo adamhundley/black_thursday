@@ -126,8 +126,26 @@ class SalesAnalystTest < Minitest::Test
     assert_equal [], sa.bottom_merchants_by_invoice_count
   end
 
-  def test_top_days_by_invoice_count
+  def test_day_of_invoices_returns_array_of_days
 
+  end
+
+  def test_group_invoices_by_day_returns_array_of_all_invoices_on_given_day
+  end
+
+  def test_counts_invoices_by_day_returns_array_of_day_totals
+  end
+
+  def test_average_invoices_per_day_returns_float_of_mean_count
+  end
+
+  def test_variance_of_invoices_per_day_from_average_squared_returns_float
+  end
+
+  def test_variance_divided_by_total_invoices_returns_float
+  end
+
+  def test_sd_of_invoices_per_day_returns_float
   end
 
 end
