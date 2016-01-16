@@ -48,8 +48,4 @@ attr_reader :all
     all.find_all { |x| range.include?(x.unit_price.to_f) }
   end
 
-  def convert_to_big_decimal(price)
-    BigDecimal.new("#{price[0..-3]}.#{price[-2..-1]}")
-  end
-
 end

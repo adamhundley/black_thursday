@@ -19,12 +19,12 @@ attr_reader :all
   def data_into_hash(data)
     @all ||= data.map do |row|
       id = row[:id]
-      item_id = row[:item_id]
+      item_id = row[:item_id].to_i
       created_at = row[:created_at]
       updated_at = row[:updated_at]
-      invoice_id = row[:invoice_id]
+      invoice_id = row[:invoice_id].to_i
       quantity = row[:quantity]
-      unit_price = row[:unit_price]
+      unit_price = convert_to_big_decimal(row[:unit_price])
 
       hash = {:id => id,
               :item_id => item_id, :invoice_id => invoice_id,
@@ -38,7 +38,4 @@ attr_reader :all
     all.find_all { |x| x.item_id == item_id }
   end
 
-  def find_all_by_invoice_id(invoice_id)
-    all.find_all { |x| x.invoice_id == invoice_id }
-  end
 end
