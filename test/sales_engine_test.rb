@@ -109,6 +109,8 @@ attr_reader :se_hash, :se
 
 
   def test_merchant_to_customers_realtionship
+    merchant = se.merchants.find_all_by_merchant_id(12334112)
+    assert_equal Customer, merchant
 
   end
 
