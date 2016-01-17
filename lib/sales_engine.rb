@@ -46,9 +46,11 @@ attr_reader :items, :merchants, :invoices, :invoice_items, :transactions, :custo
   end
   #
   def invoice_to_items_relationship
-  #   invoices.all.each do |invoice|
-  #     invoice.items = items.find_all_by_invoice_id(invoice.merchant_id)
-  #   end
+    # invoices.all.each do |invoice|
+    #   invoices_items = invoice_items.find_all_by_invoice_id(invoice.id)
+    #   item_ids = invoices_items.map { |invoice_item| invoice_item.item_id}
+    #   invoice.items = item_ids.map { |item_id| items.find_by_id(item_id) }
+    # end
   end
 
   def invoice_to_transactions_relationship

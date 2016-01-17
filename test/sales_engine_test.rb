@@ -83,11 +83,10 @@ attr_reader :se_hash, :se
     assert_equal [], items
   end
 
-  # def test_invoice_to_items_relationship
-  #   invoice = se.invoices.all
-  #   invoices_items = invoice[0].items[0]
-  #   assert_equal Item, invoices_items.class
-  # end
+  def test_invoice_to_items_relationship
+    invoice = se.invoices.find_by_id(1)
+    assert_equal Item, invoice.items
+  end
 
 
 end
