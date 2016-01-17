@@ -1,6 +1,6 @@
 class Invoice
   attr_reader :invoice
-  attr_accessor :merchant
+  attr_accessor :merchant, :items, :transactions, :customer
 
   def initialize(invoice)
     @invoice = invoice

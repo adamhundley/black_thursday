@@ -8,7 +8,11 @@ attr_reader :se_hash, :se
   def setup
     @se_hash = {:items => './data/test_items.csv',
             :merchants => './data/test_merchant.csv',
-            :invoices => './data/test_invoices.csv'}
+            :invoices => './data/test_invoices.csv',
+            :invoice_items => './data/test_invoice_items.csv',
+            :transactions => './data/test_transactions.csv',
+            :customers => './data/test_customers.csv'}
+
     @se = SalesEngine.from_csv(se_hash)
   end
 
@@ -78,5 +82,12 @@ attr_reader :se_hash, :se
     items = merchant.find_all_by_merchant_id("6")
     assert_equal [], items
   end
+
+  # def test_invoice_to_items_relationship
+  #   invoice = se.invoices.all
+  #   invoices_items = invoice[0].items[0]
+  #   assert_equal Item, invoices_items.class
+  # end
+
 
 end

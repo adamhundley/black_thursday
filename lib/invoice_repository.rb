@@ -18,14 +18,14 @@ attr_reader :all
 
   def data_into_hash(data)
     @all ||= data.map do |row|
-      invoice_id = row[:id]
+      id = row[:id]
       customer_id = row[:customer_id]
       created_at = row[:created_at]
       updated_at = row[:updated_at]
       status = row[:status]
       merchant_id = row[:merchant_id]
 
-      hash = {:id => invoice_id,
+      hash = {:id => id,
               :customer_id => customer_id, :merchant_id => merchant_id,
               :status => status,
               :created_at => created_at, :updated_at => updated_at}
@@ -40,4 +40,5 @@ attr_reader :all
   def find_all_by_status(status)
     all.find_all { |x| x.status == status }
   end
+
 end

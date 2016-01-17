@@ -9,13 +9,20 @@ class SalesAnalystTest < Minitest::Test
   def setup
     se_hash = {:items => './data/test_items.csv',
             :merchants => './data/test_merchant.csv',
-             :invoices => './data/test_invoices.csv'}
+            :invoices => './data/test_invoices.csv',
+            :invoice_items => './data/test_invoice_items.csv',
+            :transactions => './data/test_transactions.csv',
+            :customers => './data/test_customers.csv'}
     se = SalesEngine.new(se_hash)
     @sa = SalesAnalyst.new(se)
 
-    sesd_hash = { :items => './data/test_items_sd.csv',
+    sesd_hash = {:items => './data/test_items_sd.csv',
                 :merchants => './data/test_merchant_sd.csv',
-                :invoices => './data/test_invoices.csv'}
+                :invoices => './data/test_invoices.csv',
+                :invoice_items => './data/test_invoice_items.csv',
+                :transactions => './data/test_transactions.csv',
+                :customers => './data/test_customers.csv'}
+
     sesd = SalesEngine.new(sesd_hash)
     @sasd = SalesAnalyst.new(sesd)
   end

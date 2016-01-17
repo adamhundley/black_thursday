@@ -16,12 +16,12 @@ module Finder
     all.find_all { |x| x.merchant_id == id }
   end
 
-  def find_all_by_invoice_id(invoice_id)
-    all.find_all { |x| x.invoice_id == invoice_id }
-  end
-
   def convert_to_big_decimal(price)
     BigDecimal.new("#{price[0..-3]}.#{price[-2..-1]}")
+  end
+
+  def find_all_by_invoice_id(invoice_id)
+    all.find_all { |x| x.invoice_id == invoice_id }
   end
 
 end

@@ -1,11 +1,14 @@
 class SalesAnalyst
-attr_reader :sales_engine, :items, :merchants, :invoices
+attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :transactions, :customers
 
   def initialize(sales_engine)
     @sales_engine = sales_engine
     @items = sales_engine.items
     @merchants = sales_engine.merchants
     @invoices = sales_engine.invoices
+    @invoice_items = sales_engine.invoice_items
+    @transactions = sales_engine.transactions
+    @customers = sales_engine.customers
   end
 
   def total_merchants

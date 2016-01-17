@@ -1,6 +1,6 @@
 class Transaction
   attr_reader :transaction
-  # attr_accessor :item, :invoice
+  attr_accessor :invoice
 
   def initialize(transaction)
     @transaction = transaction
@@ -27,7 +27,7 @@ class Transaction
   end
 
   def credit_card_expiration_date
-    transaction[:credit_card_expiration_date] 
+    transaction[:credit_card_expiration_date]
   end
 
   def result

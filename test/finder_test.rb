@@ -12,11 +12,12 @@ attr_reader :se
     item_file = './data/test_items.csv'
     merch_file = './data/test_merchant.csv'
     invoice_file = './data/test_invoices.csv'
-    @se = SalesEngine.from_csv({
-          :items     => item_file,
-          :merchants => merch_file,
-          :invoices => invoice_file
-            })
+    @se = SalesEngine.from_csv({:items => './data/test_items.csv',
+                                :merchants => './data/test_merchant.csv',
+                                :invoices => './data/test_invoices.csv',
+                                :invoice_items => './data/test_invoice_items.csv',
+                                :transactions => './data/test_transactions.csv',
+                                :customers => './data/test_customers.csv'})
   end
 
   def test_finder_module_exists
