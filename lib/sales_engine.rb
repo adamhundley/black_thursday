@@ -44,7 +44,7 @@ attr_reader :items, :merchants, :invoices, :invoice_items, :transactions, :custo
       invoice.merchant = merchants.find_by_id(invoice.merchant_id)
     end
   end
-  #
+
   def invoice_to_items_relationship
     # invoices.all.each do |invoice|
     #   invoices_items = invoice_items.find_all_by_invoice_id(invoice.id)
@@ -58,26 +58,31 @@ attr_reader :items, :merchants, :invoices, :invoice_items, :transactions, :custo
   end
 
   def invoice_to_customer_relationship
-
+    invoices.all.each { |invoice| invoice.customer = customers.find_by_id(invoice.customer_id) }
   end
 
   def transaction_to_invoice_relationship
-
+    transactions.all.each { |transaction| transaction.invoice = invoices.find_by_id(transaction.invoice_id) }
   end
 
   def merchant_to_customers_relationship
-
+    merchants.all.each do |merchant|
+      merchant_invoice = invoices.find_all_by_merchant_id(merchant.id)
+      customer_ids = merchant_invoice.map { |invoice| invoice.customer_id }
+      merchant.customers = customer_ids.map { |id| customers.find_by_id(id) }
+    end
   end
 
   def customer_to_merchants_relationship
-
+    customers.all.each do  |customer|
+      customer_invoice = invoices.find_all_by_customer_id(customer.id)
+      merchant_ids = customer_invoice.map { |invoice| invoice.merchant_id }
+      customer.merchants = merchant_ids.map { |id| merchants.find_by_id(id) }
+    end
   end
 
-
   def merchant_to_invoice_relationship
-    merchants.all.each do |merchant|
-      merchant.invoices = invoices.find_all_by_merchant_id(merchant.id)
-    end
+    merchants.all.each { |merchant| merchant.invoices = invoices.find_all_by_merchant_id(merchant.id) }
   end
 
   def merchant_to_item_relationship
@@ -91,7 +96,5 @@ attr_reader :items, :merchants, :invoices, :invoice_items, :transactions, :custo
       item.merchant = merchants.find_by_id(item.merchant_id)
     end
   end
-
-
 
 end
