@@ -172,4 +172,6 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
     avg = average_invoices_per_day
     count_invoices_by_day.map { |day , value| day if value > (avg + sd) }.compact
   end
+
+  
 end

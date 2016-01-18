@@ -4,7 +4,7 @@ require './lib/sales_analyst'
 require './lib/sales_engine'
 
 class SalesAnalystTest < Minitest::Test
-  attr_reader :sa, :sasd
+  attr_reader :sa, :se, :sasd
 
   def setup
     se_hash = {:items => './data/test_items.csv',
@@ -13,7 +13,7 @@ class SalesAnalystTest < Minitest::Test
             :invoice_items => './data/test_invoice_items.csv',
             :transactions => './data/test_transactions.csv',
             :customers => './data/test_customers.csv'}
-    se = SalesEngine.new(se_hash)
+    @se = SalesEngine.new(se_hash)
     @sa = SalesAnalyst.new(se)
 
     sesd_hash = {:items => './data/test_items_sd.csv',
@@ -166,4 +166,15 @@ class SalesAnalystTest < Minitest::Test
   def test_top_days_by_invoice_count_returns_array_of_days_more_than_one_sd_above_mean
     assert_equal 1, sa.top_days_by_invoice_count.count
   end
+
+  def test_paid_in_full_returns_true_when_transaction_status_is_successful
+    invoice = se.invoices.find_by_id(1)
+    assert_equal true, invoice.is_paid_in_full?
+  end
+
+  def test_paid_in_full_returns_false_when_transaction_status_is_failed
+    invoice = se.invoices.find_by_id(1752)
+    assert_equal false, invoice.is_paid_in_full?
+  end
+
 end
