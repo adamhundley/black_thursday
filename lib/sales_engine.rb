@@ -27,16 +27,16 @@ attr_reader :items, :merchants, :invoices, :invoice_items, :transactions, :custo
   end
 
   def relationships
+    invoice_to_merchant_relationship
+    invoice_to_items_relationship
+    invoice_to_transactions_relationship
+    invoice_to_customer_relationship
     merchant_to_item_relationship
     merchant_to_invoice_relationship
     merchant_to_customers_relationship
     customer_to_merchants_relationship
     item_to_merchant_relationship
     transaction_to_invoice_relationship
-    invoice_to_merchant_relationship
-    invoice_to_items_relationship
-    invoice_to_transactions_relationship
-    invoice_to_customer_relationship
   end
 
   def invoice_to_merchant_relationship

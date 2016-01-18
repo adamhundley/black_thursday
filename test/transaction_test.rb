@@ -11,16 +11,16 @@ attr_reader :transaction
   def test_transaction_can_be_initialized
     assert_equal Transaction, transaction.class
   end
-  #
+  
   def test_transaction_can_generate_an_id
     assert_equal 1, transaction.id
   end
-  #
+
   def test_transaction_can_pull_updated_at
     expected = Time.parse("2012-03-27 14:53:59 UTC")
     assert_equal expected, transaction.updated_at
   end
-  #
+
   def test_transaction_can_pull_created_at
     expected = Time.parse("2012-03-27 14:53:59 UTC")
     assert_equal expected , transaction.created_at
@@ -29,15 +29,15 @@ attr_reader :transaction
   def test_transaction_can_pull_invoice_id
     assert_equal 23453, transaction.invoice_id
   end
-  #
+
   def test_transaction_can_pull_credit_card_number
     assert_equal 1234567812345678, transaction.credit_card_number
   end
-  #
+
   def test_transaction_can_pull_credit_card_expiration_date
     assert_equal "0220", transaction.credit_card_expiration_date
   end
-  #
+
   def test_transaction_can_pull_result
     assert_equal "success", transaction.result
   end

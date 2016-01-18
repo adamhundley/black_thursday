@@ -18,20 +18,83 @@ attr_reader :se_hash, :se
 
   def test_an_instance_of_sales_engine_exists
     se = SalesEngine.new(se_hash)
+
     assert se.instance_of?(SalesEngine)
   end
 
   def test_items_instantiates_items_repo
     item = se.items
+
     assert item.instance_of?(ItemRepository)
   end
 
-  def test_items_instantiates_merchants_repo
+  def test_merchants_instantiates_merchants_repo
     merchants = se.merchants
+
     assert merchants.instance_of?(MerchantRepository)
   end
 
-  def test_items_returns_item_repo_instance
+  def test_invoices_instantiates_invoice_repo
+    invoices = se.invoices
+
+    assert invoices.instance_of?(InvoiceRepository)
+  end
+
+  def test_invoice_items_instantiates_invoice_items_repo
+    invoice_items = se.invoice_items
+
+    assert invoice_items.instance_of?(InvoiceItemRepository)
+  end
+
+  def test_transactions_instantiates_transactions_repo
+    transactions = se.transactions
+
+    assert transactions.instance_of?(TransactionRepository)
+  end
+
+  def test_customers_instantiates_customers_repo
+    customers = se.customers
+
+    assert customers.instance_of?(CustomerRepository)
+  end
+
+  def test_items_contains_instances_of_items
+    item = se.items.all[0]
+
+    assert item.instance_of?(Item)
+  end
+
+  def test_merchants_contains_instances_of_merchants
+    merchants = se.merchants.all[0]
+
+    assert merchants.instance_of?(Merchant)
+  end
+
+  def test_invoices_contains_instances_of_invoices
+    invoices = se.invoices.all[0]
+
+    assert invoices.instance_of?(Invoice)
+  end
+
+  def test_invoice_items_contains_instances_of_invoice_items
+    invoice_items = se.invoice_items.all[0]
+
+    assert invoice_items.instance_of?(InvoiceItem)
+  end
+
+  def test_transactions_contains_instances_of_transactions
+    transactions = se.transactions.all[0]
+
+    assert transactions.instance_of?(Transaction)
+  end
+
+  def test_customers_contains_instances_of_customers
+    customers = se.customers.all[0]
+
+    assert customers.instance_of?(Customer)
+  end
+
+  def test_items_returns_all
     item = se.items
     assert_equal 5, item.all.count
   end
@@ -114,5 +177,6 @@ attr_reader :se_hash, :se
     customer = se.customers.find_by_id(1)
     assert_equal Merchant, customer.merchants[1].class
   end
+
 
 end

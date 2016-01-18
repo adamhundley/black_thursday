@@ -166,5 +166,4 @@ class SalesAnalystTest < Minitest::Test
   def test_top_days_by_invoice_count_returns_array_of_days_more_than_one_sd_above_mean
     assert_equal 1, sa.top_days_by_invoice_count.count
   end
-
 end
