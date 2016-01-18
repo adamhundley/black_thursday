@@ -18,12 +18,12 @@ attr_reader :items, :merchants, :invoices, :invoice_items, :transactions, :custo
   end
 
   def load_files(files)
-    @merchants = MerchantRepository.new(files[:merchants])
-    @items = ItemRepository.new(files[:items])
-    @invoices = InvoiceRepository.new(files[:invoices])
-    @invoice_items = InvoiceItemRepository.new(files[:invoice_items])
-    @transactions = TransactionRepository.new(files[:transactions])
-    @customers = CustomerRepository.new(files[:customers])
+    @merchants ||= MerchantRepository.new(files[:merchants])
+    @items ||= ItemRepository.new(files[:items])
+    @invoices ||= InvoiceRepository.new(files[:invoices])
+    @invoice_items ||= InvoiceItemRepository.new(files[:invoice_items])
+    @transactions ||= TransactionRepository.new(files[:transactions])
+    @customers ||= CustomerRepository.new(files[:customers])
   end
 
   def relationships
@@ -40,21 +40,18 @@ attr_reader :items, :merchants, :invoices, :invoice_items, :transactions, :custo
   end
 
   def invoice_to_merchant_relationship
-    invoices.all.each do |invoice|
-      invoice.merchant = merchants.find_by_id(invoice.merchant_id)
-    end
+    invoices.all.each { |invoice| invoice.merchant = merchants.find_by_id(invoice.merchant_id) }
   end
 
   def invoice_to_items_relationship
-    # invoices.all.each do |invoice|
-    #   invoices_items = invoice_items.find_all_by_invoice_id(invoice.id)
-    #   item_ids = invoices_items.map { |invoice_item| invoice_item.item_id}
-    #   invoice.items = item_ids.map { |item_id| items.find_by_id(item_id) }
-    # end
+    invoices.all.each { |invoice|
+      invoices_items = invoice_items.find_all_by_invoice_id(invoice.id)
+      item_ids = invoices_items.map { |invoice_item| invoice_item.item_id }
+      invoice.items = item_ids.map { |item_id| items.find_by_id(item_id) } }
   end
 
   def invoice_to_transactions_relationship
-
+    invoices.all.each { |invoice| invoice.transactions = transactions.find_all_by_invoice_id(invoice.id) }
   end
 
   def invoice_to_customer_relationship
@@ -66,19 +63,17 @@ attr_reader :items, :merchants, :invoices, :invoice_items, :transactions, :custo
   end
 
   def merchant_to_customers_relationship
-    merchants.all.each do |merchant|
-      merchant_invoice = invoices.find_all_by_merchant_id(merchant.id)
-      customer_ids = merchant_invoice.map { |invoice| invoice.customer_id }
-      merchant.customers = customer_ids.map { |id| customers.find_by_id(id) }
-    end
+    merchants.all.each { |merchant|
+      merchant_invoices = invoices.find_all_by_merchant_id(merchant.id)
+      customer_ids = merchant_invoices.map { |invoice| invoice.customer_id }
+      merchant.customers = customer_ids.map { |id| customers.find_by_id(id) } }
   end
 
   def customer_to_merchants_relationship
-    customers.all.each do  |customer|
-      customer_invoice = invoices.find_all_by_customer_id(customer.id)
-      merchant_ids = customer_invoice.map { |invoice| invoice.merchant_id }
-      customer.merchants = merchant_ids.map { |id| merchants.find_by_id(id) }
-    end
+    customers.all.each { |customer|
+      customer_invoices = invoices.find_all_by_customer_id(customer.id)
+      merchant_ids = customer_invoices.map { |invoice| invoice.merchant_id }.uniq
+      customer.merchants = merchant_ids.map { |id| merchants.find_by_id(id) } }
   end
 
   def merchant_to_invoice_relationship
@@ -86,15 +81,10 @@ attr_reader :items, :merchants, :invoices, :invoice_items, :transactions, :custo
   end
 
   def merchant_to_item_relationship
-    merchants.all.each do |merchant|
-      merchant.items = items.find_all_by_merchant_id(merchant.id)
-    end
+    merchants.all.each { |merchant| merchant.items = items.find_all_by_merchant_id(merchant.id) }
   end
 
   def item_to_merchant_relationship
-    items.all.each do |item|
-      item.merchant = merchants.find_by_id(item.merchant_id)
-    end
+    items.all.each { |item| item.merchant = merchants.find_by_id(item.merchant_id) }
   end
-
 end

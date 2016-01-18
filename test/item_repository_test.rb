@@ -30,7 +30,7 @@ attr_reader :item_repo
   end
 
   def test_find_by_id_works
-    assert item_repo.find_by_id(1)
+    assert item_repo.find_by_id(263519844)
   end
 
   def test_find_by_name_defaults_nil

@@ -9,9 +9,6 @@ include Finder
 attr_reader :se
 
   def setup
-    item_file = './data/test_items.csv'
-    merch_file = './data/test_merchant.csv'
-    invoice_file = './data/test_invoices.csv'
     @se = SalesEngine.from_csv({:items => './data/test_items.csv',
                                 :merchants => './data/test_merchant.csv',
                                 :invoices => './data/test_invoices.csv',
@@ -30,7 +27,7 @@ attr_reader :se
   end
 
   def test_find_by_id_returns_an_instance_of_item
-    item = se.items.find_by_id(1)
+    item = se.items.find_by_id(263519844)
     assert item.instance_of?(Item)
   end
 

@@ -26,7 +26,7 @@ attr_reader :invoice_repo
   end
 
   def test_find_by_id_defaults_nil
-    assert_equal nil, invoice_repo.find_by_id(56)
+    assert_equal nil, invoice_repo.find_by_id(568)
   end
 
   def test_find_by_id_works

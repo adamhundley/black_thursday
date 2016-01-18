@@ -79,18 +79,19 @@ attr_reader :se_hash, :se
 
   def test_merchant_with_no_items_returns_empty_array
     merchant = se.items
-    items = merchant.find_all_by_merchant_id("6")
+    items = merchant.find_all_by_merchant_id(6)
     assert_equal [], items
   end
 
   def test_invoice_to_items_relationship
-    # invoice = se.invoices.find_by_id(1)
-    # assert_equal Item, invoice.items[1].class
+    invoice = se.invoices.find_by_id(1)
+    assert_equal Item, invoice.items[0].class
   end
 
-  def test_invoice_to_transactions_relations
-    # invoice = se.invoices.find_by_id(1)
-    # assert_equal Transaction, invoice.transactions.class
+  def test_invoice_to_transactions_relationship
+    invoice = se.invoices.find_by_id(1)
+    assert_equal Transaction, invoice.transactions[0].class
+    assert_equal 1, invoice.transactions.length
   end
 
   def test_invoice_to_customer_relationship
@@ -98,24 +99,20 @@ attr_reader :se_hash, :se
     assert_equal Customer, invoice.customer.class
   end
 
-  def test_transaction_to_customers_relationship
-
-  end
 
   def test_transaction_to_invoice_relationship
     transaction = se.transactions.find_by_id(3)
     assert_equal Invoice, transaction.invoice.class
   end
 
-
   def test_merchant_to_customers_realtionship
-    merchant = se.merchants.find_all_by_merchant_id(12334112)
-    assert_equal Customer, merchant
-
+    merchant = se.merchants.find_by_id(1)
+    assert_equal Customer, merchant.customers[1].class
   end
 
   def test_cutsomer_to_merchants_relationship
-
+    customer = se.customers.find_by_id(1)
+    assert_equal Merchant, customer.merchants[1].class
   end
 
 end
