@@ -92,7 +92,7 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
   def golden_items
     sd = items_standard_deviation
     avg = average_price_of_all_items
-    items.all.map { |item| item if item.unit_price >= (avg + (sd*2)) }.compact
+    items.all.map { |item| item if item.unit_price_to_dollars >= (avg + (sd*2)) }.compact
   end
 
   def average_invoices_per_merchant
@@ -137,7 +137,7 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
   end
 
   def day_of_invoice
-    invoices.all.map { |invoice| invoice.created_at.strftime("%A").to_sym }
+    invoices.all.map { |invoice| invoice.created_at.strftime("%A") }
   end
 
   def group_invoices_by_day

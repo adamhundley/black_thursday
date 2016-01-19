@@ -29,7 +29,7 @@ attr_reader :all
               :customer_id => customer_id, :merchant_id => merchant_id,
               :status => status,
               :created_at => created_at, :updated_at => updated_at}
-      Invoice.new(hash)
+    Invoice.new(hash)
     end
   end
 

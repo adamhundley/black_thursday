@@ -143,7 +143,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_counts_invoices_by_day_returns_array_of_day_totals
-    assert_equal 4, sa.count_invoices_by_day[:Friday]
+    assert_equal 4, sa.count_invoices_by_day["Friday"]
   end
 
   def test_average_invoices_per_day_returns_float_of_mean_count
