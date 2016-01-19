@@ -102,15 +102,15 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_total_invoices_returned
-    assert_equal 36, sa.total_invoices_with_common_status(:shipped)
+    assert_equal 40, sa.total_invoices_with_common_status(:shipped)
   end
 
   def test_invoice_status_returns_percentage_of_invoices_with_shipped_status
-    assert_equal 59.02, sa.invoice_status(:shipped)
+    assert_equal 65.57, sa.invoice_status(:shipped)
   end
 
   def test_invoice_status_returns_percentage_of_invoices_with_pending_status
-    assert_equal 34.43, sa.invoice_status(:pending)
+    assert_equal 27.87, sa.invoice_status(:pending)
   end
 
   def test_invoice_status_returns_percentage_of_invoices_with_returned_status
@@ -199,7 +199,7 @@ class SalesAnalystTest < Minitest::Test
 
   def test_total_returns_sum_of_all_invoices_per_merchant
     merchant = se.merchants.find_by_id(1)
-    assert_equal 35447.74, merchant.total
+    assert_equal 35447.74, merchant.revenue
   end
 
   def test_top_revenue_earners_returns_array_of_requested_amount
@@ -209,4 +209,30 @@ class SalesAnalystTest < Minitest::Test
   def test_top_revenue_earners_returns_array_of_merchant_instances
     assert_equal Merchant, sa.top_revenue_earners(5)[0].class
   end
+
+  def test_merchants_with_pending_invoices_returns_an_array_of_merchants
+    assert_equal 1, sa.merchants_with_pending_invoices.count
+  end
+
+  def test_merchants_with_pending_invoice_returns_merchant_instances
+    assert_equal Merchant, sa.merchants_with_pending_invoices[0].class
+  end
+
+  def test_merchants_with_only_one_item_count_returns_an_array_of_merchants
+    assert_equal 1, sa.merchants_with_only_one_item.count
+  end
+
+  def test_merchants_with_only_one_item_count_returns_an_array_of_merchants
+    assert_equal Merchant, sa.merchants_with_only_one_item[0].class
+  end
+
+  def test_merchants_with_only_one_item_registered_in_month_returns_merchants
+    assert_equal 1, sa.merchants_with_only_one_item_registered_in_month("March").count
+  end
+
+  def test_revenue_by_merchant_gives_total_revenue
+    assert_equal 35447.74, sa.revenue_by_merchant(1).to_f
+  end
+
+
 end

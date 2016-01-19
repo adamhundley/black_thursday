@@ -21,7 +21,7 @@ module Finder
   end
 
   def convert_to_big_decimal(price)
-    BigDecimal.new("#{price[0..-3]}.#{price[-2..-1]}")
+    BigDecimal.new(price)
   end
 
   def find_all_by_invoice_id(invoice_id)

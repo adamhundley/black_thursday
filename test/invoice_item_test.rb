@@ -43,7 +43,7 @@ attr_reader :invoice_item
   end
 
   def test_unit_price_to_dollars_returns_dollars_formated_as_float
-    assert_equal 342, invoice_item.unit_price_to_dollars
+    assert_equal 3.42, invoice_item.unit_price_to_dollars
     assert_equal Float, invoice_item.unit_price_to_dollars.class
   end
 end

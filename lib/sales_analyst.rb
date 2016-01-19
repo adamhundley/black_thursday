@@ -58,7 +58,7 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
       found_items = items.find_all_by_merchant_id(merchant_id)
       count = found_items.count
       if count > 0
-        (found_items.reduce(0) { |sum, item| item.unit_price + sum } / count).round(2)
+        (found_items.reduce(0) { |sum, item| item.unit_price_to_dollars + sum } / count).round(2)
       end
   end
 
@@ -68,12 +68,12 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
   end
 
   def average_price_of_all_items
-    (items.all.reduce(0) { |sum, item| item.unit_price + sum}/total_items).to_f.round(2)
+    (items.all.reduce(0) { |sum, item| item.unit_price_to_dollars + sum}/total_items).to_f.round(2)
   end
 
   def variance_of_all_item_prices_from_mean
     avg = average_price_of_all_items
-    (items.all.map { |item| (item.unit_price.to_f - avg) ** 2 }.inject(:+)).round(2)
+    (items.all.map { |item| (item.unit_price_to_dollars.to_f - avg) ** 2 }.inject(:+)).round(2)
   end
 
   def variance_divide_total_items
@@ -182,8 +182,32 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
     totals.inject(:+)
   end
 
-  def top_revenue_earners(num = 20)
-    merchants.all.sort_by { |merchant| merchant.total || 0 }.reverse[0..(num-1)]
+  def merchants_ranked_by_revenue
+    merchants.all.sort_by { |merchant| merchant.revenue || 0 }.reverse
   end
 
+  def top_revenue_earners(num = 20)
+    merchants_ranked_by_revenue[0..(num-1)]
+  end
+
+  def merchants_with_pending_invoices
+    merchants.all.map { |merchant|
+      merch_invoice = merchant.invoices
+      pending = merch_invoice.map { |invoice| invoice.transactions }.flatten
+      pending.map { |trans| merchant if trans.result == "failed"
+       }.uniq.compact}.flatten
+  end
+
+  def merchants_with_only_one_item
+    merchants.all.map { |merchant| merchant if merchant.items.count == 1 }.compact
+  end
+
+  def merchants_with_only_one_item_registered_in_month(month)
+    merchants_with_only_one_item.map { |merchant| merchant if merchant.created_at.strftime("%B") == month }.compact
+  end
+
+  def revenue_by_merchant(merchant_id)
+    merchant = merchants.find_by_id(merchant_id)
+    merchant.revenue
+  end
 end

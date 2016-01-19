@@ -54,11 +54,11 @@ attr_reader :invoice_repo
   end
 
   def test_find_all_by_status_returns_array_of_shipped_invoices
-      assert_equal 36, invoice_repo.find_all_by_status(:shipped).count
+      assert_equal 40, invoice_repo.find_all_by_status(:shipped).count
   end
 
   def test_find_all_by_status_returns_array_of_pending_invoices
-    assert_equal 21, invoice_repo.find_all_by_status(:pending).count
+    assert_equal 17, invoice_repo.find_all_by_status(:pending).count
   end
 
   def test_find_all_by_status_returns_array_of_returned_invoices

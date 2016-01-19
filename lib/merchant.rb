@@ -20,14 +20,14 @@ class Merchant
   end
 
   def created_at
-    merchant[:created_at]
+    Time.parse(merchant[:created_at])
   end
 
   def updated_at
-    merchant[:updated_at]
+    Time.parse(merchant[:updated_at])
   end
 
-  def total
+  def revenue
     invoices.map { |invoice| invoice.total }.compact.inject(:+)
   end
 
