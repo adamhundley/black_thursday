@@ -2,6 +2,10 @@ class Transaction
   attr_reader :transaction
   attr_accessor :invoice
 
+  def inspect
+    "#<#{self.class}>"
+  end
+
   def initialize(transaction)
     @transaction = transaction
   end

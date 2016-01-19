@@ -2,6 +2,10 @@ class InvoiceItem
   attr_reader :invoice_item
   attr_accessor :item, :invoice
 
+  def inspect
+    "#<#{self.class}>"
+  end
+
   def initialize(invoice_item)
     @invoice_item = invoice_item
   end
@@ -27,7 +31,7 @@ class InvoiceItem
   end
 
   def quantity
-    invoice_item[:quantity]
+    invoice_item[:quantity].to_i
   end
 
   def unit_price
@@ -37,4 +41,5 @@ class InvoiceItem
   def unit_price_to_dollars
     unit_price.to_f
   end
+
 end

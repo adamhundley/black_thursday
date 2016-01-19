@@ -2,6 +2,10 @@ class Customer
   attr_reader :customer
   attr_accessor :merchants
 
+  def inspect
+    "#<#{self.class}>"
+  end
+
   def initialize(customer)
     @customer = customer
   end

@@ -173,5 +173,17 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
     count_invoices_by_day.map { |day , value| day if value > (avg + sd) }.compact
   end
 
-  
+  def invoice_items_for_a_specific_date(date)
+    invoices.all.map { |invoice| invoice.total if invoice.created_at.strftime("%F") == date.strftime("%F")}.compact.flatten
+  end
+
+  def total_revenue_by_date(date)
+    totals = invoice_items_for_a_specific_date(date)
+    totals.inject(:+)
+  end
+
+  def top_revenue_earners(num = 20)
+    merchants.all.sort_by { |merchant| merchant.total || 0 }.reverse[0..(num-1)]
+  end
+
 end

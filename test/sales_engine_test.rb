@@ -162,6 +162,10 @@ attr_reader :se_hash, :se
     assert_equal Customer, invoice.customer.class
   end
 
+  def test_invoice_to_invoice_items_relationship
+    invoice = se.invoices.find_by_id(1)
+    assert_equal InvoiceItem, invoice.invoice_items[0].class
+  end
 
   def test_transaction_to_invoice_relationship
     transaction = se.transactions.find_by_id(3)

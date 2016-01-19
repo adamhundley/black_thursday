@@ -1,6 +1,10 @@
 class Invoice
   attr_reader :invoice
-  attr_accessor :merchant, :items, :transactions, :customer
+  attr_accessor :merchant, :items, :transactions, :customer, :invoice_items
+
+  def inspect
+    "#<#{self.class}>"
+  end
 
   def initialize(invoice)
     @invoice = invoice
@@ -33,4 +37,9 @@ class Invoice
   def is_paid_in_full?
     transactions.any? { |transaction| transaction.result == "success" }
   end
+
+  def total
+    invoice_items.map { |x| x.unit_price * x.quantity}.inject(:+)
+  end
+
 end

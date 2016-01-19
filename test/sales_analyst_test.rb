@@ -143,7 +143,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_counts_invoices_by_day_returns_array_of_day_totals
-    assert_equal 1, sa.count_invoices_by_day[:Friday]
+    assert_equal 4, sa.count_invoices_by_day[:Friday]
   end
 
   def test_average_invoices_per_day_returns_float_of_mean_count
@@ -151,16 +151,16 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_variance_of_invoices_per_day_from_average_squared_returns_float
-    assert_equal 273.43 , sa.variance_of_invoices_per_day_from_average_squared
+    assert_equal 217.43 , sa.variance_of_invoices_per_day_from_average_squared
   end
 
   def test_variance_divided_by_total_invoices_returns_float
-    assert_equal 45.57, sa.variance_divided_by_total_invoices
+    assert_equal 36.24, sa.variance_divided_by_total_invoices
 
   end
 
   def test_sd_of_invoices_per_day_returns_float
-    assert_equal 6.75, sa.sd_of_invoices_per_day
+    assert_equal 6.02, sa.sd_of_invoices_per_day
   end
 
   def test_top_days_by_invoice_count_returns_array_of_days_more_than_one_sd_above_mean
@@ -177,4 +177,36 @@ class SalesAnalystTest < Minitest::Test
     assert_equal false, invoice.is_paid_in_full?
   end
 
+  def test_total_returns_sum_of_all_invoice_items_unit_prices_per_invoice_id
+    invoice = se.invoices.find_by_id(1)
+    assert_equal 21067.77, invoice.total
+  end
+
+  def test_total_returns_sum_of_all_invoice_items_unit_prices_per_invoice_id
+    invoice = se.invoices.find_by_id(1)
+    assert_equal BigDecimal, invoice.total.class
+  end
+
+  def test_total_revenue_by_date_returns_all_revenue_for_a_specifc_date
+    date = Time.parse("2012-02-17")
+    assert_equal 26356.9, sa.total_revenue_by_date(date)
+  end
+
+  def test_total_revenue_by_date_returns_big_decimal_class
+    date = Time.parse("2012-02-17")
+    assert_equal BigDecimal, sa.total_revenue_by_date(date).class
+  end
+
+  def test_total_returns_sum_of_all_invoices_per_merchant
+    merchant = se.merchants.find_by_id(1)
+    assert_equal 35447.74, merchant.total
+  end
+
+  def test_top_revenue_earners_returns_array_of_requested_amount
+    assert_equal 3, sa.top_revenue_earners(3).count
+  end
+
+  def test_top_revenue_earners_returns_array_of_merchant_instances
+    assert_equal Merchant, sa.top_revenue_earners(5)[0].class
+  end
 end

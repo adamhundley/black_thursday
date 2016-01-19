@@ -1,5 +1,9 @@
 module Finder
 
+  def inspect
+    "#<#{self.class} #{@all.size} rows>"
+  end
+
   def find_by_id(number)
     all.find do |x|
       x.id == number

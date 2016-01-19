@@ -4,6 +4,10 @@ class Item
   attr_reader :item
   attr_accessor :merchant
 
+  def inspect
+    "#<#{self.class}>"
+  end
+
   def initialize(item)
     @item = item
   end
