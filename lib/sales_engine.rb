@@ -70,7 +70,7 @@ attr_reader :items, :merchants, :invoices, :invoice_items, :transactions, :custo
   def merchant_to_customers_relationship
     merchants.all.each { |merchant|
       merchant_invoices = invoices.find_all_by_merchant_id(merchant.id)
-      customer_ids = merchant_invoices.map { |invoice| invoice.customer_id }
+      customer_ids = merchant_invoices.map { |invoice| invoice.customer_id }.uniq
       merchant.customers = customer_ids.map { |id| customers.find_by_id(id) } }
   end
 

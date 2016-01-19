@@ -174,12 +174,12 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
   end
 
   def invoice_items_for_a_specific_date(date)
-    invoices.all.map { |invoice| invoice.total if invoice.created_at.strftime("%F") == date.strftime("%F")}.compact.flatten
+    invoices.all.map { |invoice| invoice.total if invoice.updated_at.strftime("%F") == date.strftime("%F")}.compact.flatten
   end
 
   def total_revenue_by_date(date)
     totals = invoice_items_for_a_specific_date(date)
-    totals.inject(:+)
+    totals.inject(0, :+)
   end
 
   def merchants_ranked_by_revenue
@@ -191,11 +191,17 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
   end
 
   def merchants_with_pending_invoices
-    merchants.all.map { |merchant|
-      merch_invoice = merchant.invoices
-      pending = merch_invoice.map { |invoice| invoice.transactions }.flatten
-      pending.map { |trans| merchant if trans.result == "failed"
-       }.uniq.compact}.flatten
+    # merchants_with_pending_invoices = []
+    merchants.all.map do |merchant|
+      merchant if merchant.invoices.select { |invoice| invoice.is_paid_in_full? == false }.empty?
+        # merchants_with_pending_invoices << merchant
+    end
+    # merchants_with_pending_invoices
+
+      # merch_invoice = merchant.invoices
+      # pending = merch_invoice.map { |invoice| invoice.transactions }.flatten
+      # pending.map { |trans| merchant if trans.result == "failed"
+      #  }.uniq.compact}.flatten
   end
 
   def merchants_with_only_one_item
