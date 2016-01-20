@@ -165,7 +165,11 @@ include ItemAnalysis
   end
 
   def merchants_with_pending_invoices
-    merchants.all.select { |merchant| merchant if merchant.invoices.any? { |invoice| !invoice.is_paid_in_full? } }.compact
+    merchants.all.select do |merchant|
+      merchant if merchant.invoices.any? do |inv|
+        !inv.is_paid_in_full?
+      end
+    end.compact
   end
 
   def merchants_with_only_one_item
@@ -173,8 +177,8 @@ include ItemAnalysis
   end
 
   def merchants_with_only_one_item_registered_in_month(month)
-    merchants_with_only_one_item.map do
-      |merch| merch if merch.created_at.strftime("%B") == month
+    merchants_with_only_one_item.map do |merch|
+      merch if merch.created_at.strftime("%B") == month
     end.compact
   end
 
@@ -183,15 +187,15 @@ include ItemAnalysis
     merchant.revenue
   end
 
-  def most_sold_item_for_merchant(merchant_id)
-    merchant = merchants.find_by_id(merchant_id)
-    merchants_items = merchant.invoices_items
-    invoices_items = merchants_items.map { |item| invoice_items.find_all_by_item_id(item.id)}.flatten
-    i = invoices_items.max_by { |i| i.quantity }
-    i.item
-  end
-
-  def best_item_for_merchant(merchant_id)
-
-  end
+  # def most_sold_item_for_merchant(merchant_id)
+  #   merchant = merchants.find_by_id(merchant_id)
+  #   merchants_items = merchant.invoices_items
+  #   invoices_items = merchants_items.map { |item| invoice_items.find_all_by_item_id(item.id)}.flatten
+  #   i = invoices_items.max_by { |i| i.quantity }
+  #   i.item
+  # end
+  #
+  # def best_item_for_merchant(merchant_id)
+  #
+  # end
 end
