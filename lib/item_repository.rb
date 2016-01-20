@@ -27,9 +27,12 @@ attr_reader :all
       merchant_id = row[:merchant_id]
 
       hash = {:id => item_id,
-              :description => description, :merchant_id => merchant_id,
+              :description => description,
+              :merchant_id => merchant_id,
               :name => name,
-              :created_at => created_at, :updated_at => updated_at, :unit_price => unit_price}
+              :created_at => created_at,
+              :updated_at => updated_at,
+              :unit_price => unit_price}
       Item.new(hash)
     end
   end

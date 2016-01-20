@@ -77,8 +77,8 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 533.31, sasd.average_price_of_all_items
   end
 
-  def test_variance_of_all_item_prices_from_mean
-    assert_equal 4326479.81, sasd.variance_of_all_item_prices_from_mean
+  def test_sum_of_all_item_prices_from_mean
+    assert_equal 4326479.81, sasd.sum_of_all_item_prices_from_mean
   end
 
   def test_items_variance_divide_total_items
@@ -199,10 +199,11 @@ class SalesAnalystTest < Minitest::Test
 
   def test_total_returns_sum_of_all_invoices_per_merchant
     merchant = se.merchants.find_by_id(1)
-    assert_equal 35447.74, merchant.revenue
+    assert_equal 0, merchant.revenue
   end
 
   def test_top_revenue_earners_returns_array_of_requested_amount
+
     assert_equal 3, sa.top_revenue_earners(3).count
   end
 
@@ -219,7 +220,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_merchants_with_pending_invoices_returns_an_array_of_merchants
-    assert_equal 2, sa.merchants_with_pending_invoices.count
+    assert_equal 1, sa.merchants_with_pending_invoices.count
   end
 
   def test_merchants_with_pending_invoice_returns_merchant_instances
@@ -242,5 +243,13 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 35447.74, sa.revenue_by_merchant(1).to_f
   end
 
+
+  def test_most_sold_item_for_merchant_returns_an_instance_of_item
+    assert_equal Item, sa.most_sold_item_for_merchant(1).class
+  end
+
+  def test_best_item_for_merchant_returns_item_with_most_revenue
+    assert_equal Item, sa.best_item_for_merchant(1).class
+  end
 
 end

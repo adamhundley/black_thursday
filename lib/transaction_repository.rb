@@ -28,7 +28,9 @@ attr_reader :all
       hash = {:id => id,
               :result => result, :invoice_id => invoice_id,
               :credit_card_number => credit_card_number,
-              :created_at => created_at, :updated_at => updated_at, :credit_card_expiration_date => credit_card_expiration_date}
+              :created_at => created_at,
+              :updated_at => updated_at,
+              :credit_card_expiration_date => credit_card_expiration_date}
       Transaction.new(hash)
     end
   end

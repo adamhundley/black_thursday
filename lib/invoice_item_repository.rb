@@ -27,9 +27,12 @@ attr_reader :all
       unit_price = convert_to_big_decimal(row[:unit_price])
 
       hash = {:id => id,
-              :item_id => item_id, :invoice_id => invoice_id,
+              :item_id => item_id,
+              :invoice_id => invoice_id,
               :quantity => quantity,
-              :created_at => created_at, :updated_at => updated_at, :unit_price => unit_price}
+              :created_at => created_at,
+              :updated_at => updated_at,
+              :unit_price => unit_price}
       InvoiceItem.new(hash)
     end
   end

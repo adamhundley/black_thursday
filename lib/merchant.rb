@@ -28,7 +28,9 @@ class Merchant
   end
 
   def revenue
-    invoices.map { |invoice| invoice.total if invoice.is_paid_in_full? }.compact.inject(0, :+)
+    invoices.map  do |invoice|
+      invoice.total if invoice.is_paid_in_full?
+    end.compact.inject(0, :+)
   end
 
 end
