@@ -236,14 +236,12 @@ class SalesAnalystTest < Minitest::Test
 #########
 
   def test_most_sold_item_for_merchant_returns_an_instance_of_item
-    skip
-
     assert_equal Item, sa.most_sold_item_for_merchant(1).class
   end
 
   def test_best_item_for_merchant_returns_item_with_most_revenue
     skip
-    
+
     assert_equal Item, sa.best_item_for_merchant(1).class
   end
 

@@ -187,14 +187,14 @@ include ItemAnalysis
     merchant.revenue
   end
 
-  # def most_sold_item_for_merchant(merchant_id)
-  #   merchant = merchants.find_by_id(merchant_id)
-  #   merchants_items = merchant.invoices_items
-  #   invoices_items = merchants_items.map { |item| invoice_items.find_all_by_item_id(item.id)}.flatten
-  #   i = invoices_items.max_by { |i| i.quantity }
-  #   i.item
-  # end
-  #
+  def most_sold_item_for_merchant(merchant_id)
+    merchant = merchants.find_by_id(merchant_id)
+    merchants_invoices = merchant.invoices
+    invoices_items = merchants_invoices.map { |invoice| invoice_items.find_all_by_invoice_id(invoice.id)}.flatten
+    inv_item =invoices_items.max_by { |i| i.quantity }
+    items.find_by_id(inv_item.item_id)
+  end
+
   # def best_item_for_merchant(merchant_id)
   #
   # end
