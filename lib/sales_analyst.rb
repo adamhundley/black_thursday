@@ -51,7 +51,7 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
   def merchants_with_high_item_count
     sd = average_items_per_merchant_standard_deviation
     avg = average_items_per_merchant
-    merchants.all.map { |merchant| merchant if merchant.items.count >= avg + sd }.compact
+    merchants.all.select { |merchant| merchant if merchant.items.count >= avg + sd }
   end
 
   def average_item_price_for_merchant(merchant_id)
@@ -63,8 +63,10 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
   end
 
   def average_average_price_per_merchant
-    avg = merchants.all.map { |merchant| average_item_price_for_merchant(merchant.id)}.compact
+    avg = merchants.all.map { |merchant|
+    average_item_price_for_merchant(merchant.id)}.compact
     (avg.inject(:+)/total_merchants).round(2)
+
   end
 
   def average_price_of_all_items
@@ -73,7 +75,7 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
 
   def variance_of_all_item_prices_from_mean
     avg = average_price_of_all_items
-    (items.all.map { |item| (item.unit_price_to_dollars.to_f - avg) ** 2 }.inject(:+)).round(2)
+    (items.all.map { |item| (item.unit_price_to_dollars.to_f - avg) ** 2 }.inject(0,:+)).round(2)
   end
 
   def variance_divide_total_items
@@ -92,7 +94,7 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
   def golden_items
     sd = items_standard_deviation
     avg = average_price_of_all_items
-    items.all.map { |item| item if item.unit_price_to_dollars >= (avg + (sd*2)) }.compact
+    items.all.select { |item| item if item.unit_price_to_dollars >= (avg + (sd*2)) }
   end
 
   def average_invoices_per_merchant
@@ -174,7 +176,7 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
   end
 
   def invoice_items_for_a_specific_date(date)
-    invoices.all.map { |invoice| invoice.total if invoice.updated_at.strftime("%F") == date.strftime("%F")}.compact.flatten
+    invoices.all.map { |invoice| invoice.total if invoice.updated_at.strftime("%F") == date.strftime("%F") && invoice.is_paid_in_full? }.compact.flatten
   end
 
   def total_revenue_by_date(date)
@@ -183,25 +185,19 @@ attr_reader :sales_engine, :items, :merchants, :invoices, :invoice_items, :trans
   end
 
   def merchants_ranked_by_revenue
-    merchants.all.sort_by { |merchant| merchant.revenue || 0 }.reverse
+    merchants.all.sort_by { |merchant| merchant.revenue || 0 }.compact.reverse
   end
 
   def top_revenue_earners(num = 20)
     merchants_ranked_by_revenue[0..(num-1)]
   end
 
-  def merchants_with_pending_invoices
-    # merchants_with_pending_invoices = []
-    merchants.all.map do |merchant|
-      merchant if merchant.invoices.select { |invoice| invoice.is_paid_in_full? == false }.empty?
-        # merchants_with_pending_invoices << merchant
-    end
-    # merchants_with_pending_invoices
+  def pending_invoices
+    invoices.all.select { |invoice| invoice.is_paid_in_full? }
+  end
 
-      # merch_invoice = merchant.invoices
-      # pending = merch_invoice.map { |invoice| invoice.transactions }.flatten
-      # pending.map { |trans| merchant if trans.result == "failed"
-      #  }.uniq.compact}.flatten
+  def merchants_with_pending_invoices
+    pending_invoices.map { |invoice| invoice.merchant }.uniq
   end
 
   def merchants_with_only_one_item

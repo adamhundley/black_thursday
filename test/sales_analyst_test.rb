@@ -210,8 +210,16 @@ class SalesAnalystTest < Minitest::Test
     assert_equal Merchant, sa.top_revenue_earners(5)[0].class
   end
 
+  def test_returns_all_pending_invoices
+    assert_equal 2, sa.pending_invoices.count
+  end
+
+  def test_pending_invoice_returns_invoice_instances
+    assert_equal Invoice, sa.pending_invoices[0].class
+  end
+
   def test_merchants_with_pending_invoices_returns_an_array_of_merchants
-    assert_equal 1, sa.merchants_with_pending_invoices.count
+    assert_equal 2, sa.merchants_with_pending_invoices.count
   end
 
   def test_merchants_with_pending_invoice_returns_merchant_instances
