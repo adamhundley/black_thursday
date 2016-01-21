@@ -6,12 +6,12 @@ class SalesEngineTest < Minitest::Test
 attr_reader :se_hash, :se
 
   def setup
-    @se_hash = {:items => './data/test_items.csv',
-            :merchants => './data/test_merchant.csv',
-            :invoices => './data/test_invoices.csv',
-            :invoice_items => './data/test_invoice_items.csv',
-            :transactions => './data/test_transactions.csv',
-            :customers => './data/test_customers.csv'}
+    @se_hash = {:items => './test_data/test_items.csv',
+                :merchants => './test_data/test_merchant.csv',
+                :invoices => './test_data/test_invoices.csv',
+                :invoice_items => './test_data/test_invoice_items.csv',
+                :transactions => './test_data/test_transactions.csv',
+                :customers => './test_data/test_customers.csv'}
 
     @se = SalesEngine.from_csv(se_hash)
   end

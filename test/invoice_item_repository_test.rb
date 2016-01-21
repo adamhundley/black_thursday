@@ -6,7 +6,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
 attr_reader :invoice_item_repo
 
   def setup
-    invoice_file = './data/test_invoice_items.csv'
+    invoice_file = './test_data/test_invoice_items.csv'
     @invoice_item_repo = InvoiceItemRepository.new(invoice_file)
   end
 
@@ -48,5 +48,5 @@ attr_reader :invoice_item_repo
   def test_find_all_by_invoice_id_returns_matching_invoice_items
     assert_equal 8, invoice_item_repo.find_all_by_invoice_id(1).count
   end
-  
+
 end

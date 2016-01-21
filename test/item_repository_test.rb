@@ -6,7 +6,7 @@ class ItemRepositoryTest < Minitest::Test
 attr_reader :item_repo
 
   def setup
-    item_file = './data/test_items.csv'
+    item_file = './test_data/test_items.csv'
     @item_repo = ItemRepository.new(item_file)
   end
 

@@ -5,13 +5,15 @@ require './lib/transaction'
 class TransactionTest < Minitest::Test
 attr_reader :transaction
   def setup
-    @transaction = Transaction.new({:id => 1, :invoice_id => 23453, :created_at => "2012-03-27 14:53:59 UTC", :updated_at => "2012-03-27 14:53:59 UTC", :credit_card_number => "1234567812345678", :credit_card_expiration_date => "0220", :result => "success"})
+    @transaction = Transaction.new({:id => 1, :invoice_id => 23453, :created_at => "2012-03-27 14:53:59 UTC",
+                                    :updated_at => "2012-03-27 14:53:59 UTC", :credit_card_number => "1234567812345678",
+                                    :credit_card_expiration_date => "0220", :result => "success"})
   end
 
   def test_transaction_can_be_initialized
     assert_equal Transaction, transaction.class
   end
-  
+
   def test_transaction_can_generate_an_id
     assert_equal 1, transaction.id
   end

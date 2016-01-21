@@ -5,7 +5,9 @@ require './lib/invoice'
 class InvoiceTest < Minitest::Test
 attr_reader :invoice
   def setup
-    @invoice = Invoice.new({:id => 1, :created_at => "2012-03-27 14:53:59 UTC", :updated_at => "2012-03-27 14:53:59 UTC", :customer_id => 123456, :merchant_id => 2, :status => "shipping"})
+    @invoice = Invoice.new({:id => 1, :created_at => "2012-03-27 14:53:59 UTC",
+      :updated_at => "2012-03-27 14:53:59 UTC", :customer_id => 123456,
+      :merchant_id => 2, :status => "shipping"})
   end
 
   def test_invoice_can_be_initialized

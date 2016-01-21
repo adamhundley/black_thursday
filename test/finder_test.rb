@@ -9,12 +9,12 @@ include Finder
 attr_reader :se
 
   def setup
-    @se = SalesEngine.from_csv({:items => './data/test_items.csv',
-                                :merchants => './data/test_merchant.csv',
-                                :invoices => './data/test_invoices.csv',
-                                :invoice_items => './data/test_invoice_items.csv',
-                                :transactions => './data/test_transactions.csv',
-                                :customers => './data/test_customers.csv'})
+    @se = SalesEngine.from_csv({:items => './test_data/test_items.csv',
+                                :merchants => './test_data/test_merchant.csv',
+                                :invoices => './test_data/test_invoices.csv',
+                                :invoice_items => './test_data/test_invoice_items.csv',
+                                :transactions => './test_data/test_transactions.csv',
+                                :customers => './test_data/test_customers.csv'})
   end
 
   def test_finder_module_exists

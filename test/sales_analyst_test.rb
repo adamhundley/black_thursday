@@ -7,21 +7,21 @@ class SalesAnalystTest < Minitest::Test
   attr_reader :sa, :se, :sasd
 
   def setup
-    se_hash = {:items => './data/test_items.csv',
-            :merchants => './data/test_merchant.csv',
-            :invoices => './data/test_invoices.csv',
-            :invoice_items => './data/test_invoice_items.csv',
-            :transactions => './data/test_transactions.csv',
-            :customers => './data/test_customers.csv'}
+    se_hash = {:items => './test_data/test_items.csv',
+            :merchants => './test_data/test_merchant.csv',
+            :invoices => './test_data/test_invoices.csv',
+            :invoice_items => './test_data/test_invoice_items.csv',
+            :transactions => './test_data/test_transactions.csv',
+            :customers => './test_data/test_customers.csv'}
     @se = SalesEngine.new(se_hash)
     @sa = SalesAnalyst.new(se)
 
-    sesd_hash = {:items => './data/test_items_sd.csv',
-                :merchants => './data/test_merchant_sd.csv',
-                :invoices => './data/test_invoices.csv',
-                :invoice_items => './data/test_invoice_items.csv',
-                :transactions => './data/test_transactions.csv',
-                :customers => './data/test_customers.csv'}
+    sesd_hash = {:items => './test_data/test_items_sd.csv',
+                :merchants => './test_data/test_merchant_sd.csv',
+                :invoices => './test_data/test_invoices.csv',
+                :invoice_items => './test_data/test_invoice_items.csv',
+                :transactions => './test_data/test_transactions.csv',
+                :customers => './test_data/test_customers.csv'}
 
     sesd = SalesEngine.new(sesd_hash)
     @sasd = SalesAnalyst.new(sesd)

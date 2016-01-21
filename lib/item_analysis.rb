@@ -1,7 +1,10 @@
 module ItemAnalysis
-  def average_items_per_merchant
-    average_calculator(total_items, total_merchants)
+
+  def total_items
+    items.all.count.to_f
   end
+
+  
 
   def variance_of_average_and_items
     avg = average_items_per_merchant

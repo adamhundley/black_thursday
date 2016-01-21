@@ -6,7 +6,7 @@ class InvoiceRepositoryTest < Minitest::Test
 attr_reader :invoice_repo
 
   def setup
-    invoice_file = './data/test_invoices.csv'
+    invoice_file = './test_data/test_invoices.csv'
     @invoice_repo = InvoiceRepository.new(invoice_file)
   end
 

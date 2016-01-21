@@ -6,7 +6,9 @@ class MerchantTest < Minitest::Test
 attr_reader :merchant
 
   def setup
-    @merchant = Merchant.new({:name => "test name", :id => 3, :created_at => "2012-03-27 14:53:59 UTC", :updated_at => "2012-03-27 14:53:59 UTC"})
+    @merchant = Merchant.new({:name => "test name", :id => 3,
+                              :created_at => "2012-03-27 14:53:59 UTC",
+                              :updated_at => "2012-03-27 14:53:59 UTC"})
   end
 
   def test_merchant_can_be_initialized

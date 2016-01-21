@@ -6,7 +6,9 @@ require_relative '../lib/item'
 class ItemTest < Minitest::Test
 attr_reader :item
   def setup
-    @item = Item.new({:name => "Pencil", :id => 3, :created_at => "2012-03-27 14:53:59 UTC", :updated_at => "2012-03-27 14:53:59 UTC", :description => "You can use it to write things", :unit_price => BigDecimal.new(1299)})
+    @item = Item.new({:name => "Pencil", :id => 3, :created_at => "2012-03-27 14:53:59 UTC",
+        :updated_at => "2012-03-27 14:53:59 UTC", :description => "You can use it to write things",
+        :unit_price => BigDecimal.new(1299)})
   end
 
   def test_item_can_be_initialized
