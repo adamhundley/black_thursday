@@ -41,7 +41,7 @@ module InvoiceAnalysis
   def sd_of_invoices_per_day
     standard_deviation(variance_divided_by_total_invoices)
   end
-  
+
   def top_days_by_invoice_count
     sd = sd_of_invoices_per_day
     avg = average_invoices_per_day

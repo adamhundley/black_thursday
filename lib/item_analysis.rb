@@ -4,8 +4,6 @@ module ItemAnalysis
     items.all.count.to_f
   end
 
-  
-
   def variance_of_average_and_items
     avg = average_items_per_merchant
     merchants.all.map { |merchant| (merchant.items.count - avg) **2 }.inject(:+)
