@@ -64,8 +64,16 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 1, sasd.merchants_with_high_item_count.count
   end
 
-  def test_average_price_for_merchant
+  def test_merchants_with_high_item_count_when_two_merchants_one_sd_above_av
+    assert_equal 2, sa.merchants_with_high_item_count.count
+  end
+
+  def test_average_item_price_for_merchant
     assert_equal 705.24, sasd.average_item_price_for_merchant(1)
+  end
+
+  def test_average_item_price_for_merchant_when_merchant_does_not_exist
+    assert_equal nil, sasd.average_item_price_for_merchant(34)
   end
 
   def test_average_average_price_per_merchant
@@ -97,6 +105,10 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 1, sasd.golden_items.count
   end
 
+  def test_golden_items_returns_zero_when_no_items_are_golden
+    assert_equal 0, sa.golden_items.count
+  end
+
   def test_average_invoices_per_merchant
     assert_equal 12.2, sa.average_invoices_per_merchant
   end
@@ -125,17 +137,20 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 4.97, sa.average_invoices_per_merchant_standard_deviation
   end
 
-  def test_top_merchants_by_invoice_count
+  def test_top_merchants_by_invoice_count_returns_empty_array
     assert_equal [], sa.top_merchants_by_invoice_count
   end
 
-  def test_bottom_merchants_by_invoice_count
+  def test_bottom_merchants_by_invoice_count_returns_empty_array
     assert_equal [], sa.bottom_merchants_by_invoice_count
   end
 
   def test_day_of_invoices_returns_array_of_all_days
-
     assert_equal 61, sa.day_of_invoice.count
+  end
+
+  def test_group_invoices_by_day_returns_hash
+    assert_equal Hash, sa.group_invoices_by_day.class
   end
 
   def test_group_invoices_by_day_returns_hash_of_arrays
@@ -144,6 +159,10 @@ class SalesAnalystTest < Minitest::Test
 
   def test_counts_invoices_by_day_returns_array_of_day_totals
     assert_equal 4, sa.count_invoices_by_day["Friday"]
+  end
+
+  def test_average_invoices_per_day_returns_float
+    assert_equal Float, sa.average_invoices_per_day.class
   end
 
   def test_average_invoices_per_day_returns_float_of_mean_count
@@ -156,7 +175,6 @@ class SalesAnalystTest < Minitest::Test
 
   def test_variance_divided_by_total_invoices_returns_float
     assert_equal 36.24, sa.variance_divided_by_total_invoices
-
   end
 
   def test_sd_of_invoices_per_day_returns_float
@@ -182,6 +200,11 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 21067.77, invoice.total
   end
 
+  def test_total_returns_sum_of_all_invoice_items_unit_prices_per_alternate_invoice_id
+    invoice = se.invoices.find_by_id(3)
+    assert_equal 30158.61, invoice.total
+  end
+
   def test_total_returns_sum_of_all_invoice_items_unit_prices_per_invoice_id
     invoice = se.invoices.find_by_id(1)
     assert_equal BigDecimal, invoice.total.class
@@ -189,7 +212,7 @@ class SalesAnalystTest < Minitest::Test
 
   def test_total_revenue_by_date_returns_all_revenue_for_a_specifc_date
     date = Time.parse("2012-02-17")
-    assert_equal 26356.9, sa.total_revenue_by_date(date).to_f
+    assert_equal 26356.9, sa.total_revenue_by_date(date)
   end
 
   def test_total_revenue_by_date_returns_big_decimal_class
@@ -199,7 +222,7 @@ class SalesAnalystTest < Minitest::Test
 
   def test_total_returns_sum_of_all_invoices_per_merchant
     merchant = se.merchants.find_by_id(1)
-    assert_equal 35447.74, merchant.revenue.to_f
+    assert_equal 35447.74, merchant.revenue
   end
 
   def test_top_revenue_earners_returns_array_of_requested_amount
@@ -231,7 +254,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_revenue_by_merchant_gives_total_revenue
-    assert_equal 35447.74, sa.revenue_by_merchant(1).to_f
+    assert_equal 35447.74, sa.revenue_by_merchant(1)
   end
 
   def test_most_sold_item_for_merchant_returns_an_instance_of_item

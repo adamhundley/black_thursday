@@ -1,4 +1,5 @@
 module MerchantAnalysis
+
   def total_merchants
     merchants.all.count.to_f
   end

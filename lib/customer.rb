@@ -29,4 +29,5 @@ class Customer
   def updated_at
     Time.parse(customer[:updated_at])
   end
+
 end

@@ -37,4 +37,5 @@ class Transaction
   def result
     transaction[:result]
   end
+
 end

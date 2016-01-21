@@ -1,4 +1,5 @@
 module InvoiceAnalysis
+
   def paid_in_full_invoices(merchant)
     merchant.invoices.select { |invoice| invoice.is_paid_in_full? }
   end
@@ -47,4 +48,5 @@ module InvoiceAnalysis
     avg = average_invoices_per_day
     count_invoices_by_day.map { |day , val| day if val > (avg + sd) }.compact
   end
+
 end

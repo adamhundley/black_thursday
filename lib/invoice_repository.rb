@@ -37,5 +37,4 @@ attr_reader :all
     all.find_all { |x| x.status == status }
   end
 
-
 end

@@ -48,4 +48,5 @@ module ItemAnalysis
     avg = average_price_of_all_items
     items.all.select { |i| i if i.unit_price_to_dollars >= (avg + (sd*2)) }
   end
+
 end

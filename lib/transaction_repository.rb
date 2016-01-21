@@ -42,4 +42,5 @@ attr_reader :all
   def find_all_by_result(result)
     all.find_all { |x| x.result == result }
   end
+
 end

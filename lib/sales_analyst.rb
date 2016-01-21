@@ -132,4 +132,5 @@ include ItemAnalysis
     best_item = invoices_items(merchants_invoices).max_by { |i| i.revenue }
     items.find_by_id(best_item.item_id)
   end
+
 end

@@ -108,4 +108,5 @@ attr_reader :items, :merchants, :invoices,
     items.all.each do |i| i.merchant = merchants.find_by_id(i.merchant_id)
     end
   end
+
 end

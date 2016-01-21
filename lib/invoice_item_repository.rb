@@ -36,4 +36,5 @@ attr_reader :all
   def find_all_by_item_id(item_id)
     all.find_all { |x| x.item_id == item_id }
   end
+
 end

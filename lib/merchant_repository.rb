@@ -29,4 +29,5 @@ attr_reader  :all
   def find_all_by_name(name)
     all.find_all { |x| x.name.downcase == name.downcase }
   end
+
 end
