@@ -42,4 +42,8 @@ class InvoiceItem
     (unit_price / 100.0).round(2)
   end
 
+  def revenue
+    unit_price_to_dollars * quantity
+  end
+
 end

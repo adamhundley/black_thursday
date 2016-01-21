@@ -182,20 +182,39 @@ include ItemAnalysis
     end.compact
   end
 
+  def find_merchant(merchant_id)
+    merchants.find_by_id(merchant_id)
+  end
+
   def revenue_by_merchant(merchant_id)
-    merchant = merchants.find_by_id(merchant_id)
-    merchant.revenue
+    find_merchant(merchant_id).revenue
+  end
+
+  def invoices_items(merchants_invoices)
+    merchants_invoices.map do |invoice|
+      invoice_items.find_all_by_invoice_id(invoice.id)
+    end.flatten
   end
 
   def most_sold_item_for_merchant(merchant_id)
-    merchant = merchants.find_by_id(merchant_id)
-    merchants_invoices = merchant.invoices
-    invoices_items = merchants_invoices.map { |invoice| invoice_items.find_all_by_invoice_id(invoice.id)}.flatten
-    inv_item =invoices_items.max_by { |i| i.quantity }
-    items.find_by_id(inv_item.item_id)
+    merchants_invoices = paid_in_full_invoices(find_merchant(merchant_id))
+    inv_items = invoices_items(merchants_invoices)
+    most_item_quan = inv_items.max_by { |i| i.quantity }.quantity
+
+    all_high_items = inv_items.select do |i|
+      i.item_id if i.quantity == most_item_quan
+    end
+    all_high_items.map { |i| items.find_by_id(i.item_id) }.compact
   end
 
-  # def best_item_for_merchant(merchant_id)
-  #
-  # end
+  def paid_in_full_invoices(merchant)
+    merchant.invoices.select { |invoice| invoice.is_paid_in_full? }
+  end
+
+  def best_item_for_merchant(merchant_id)
+    merchant = find_merchant(merchant_id)
+    merchants_invoices = paid_in_full_invoices(merchant)
+    best_item = invoices_items(merchants_invoices).max_by { |i| i.revenue }
+    items.find_by_id(best_item.item_id)
+  end
 end

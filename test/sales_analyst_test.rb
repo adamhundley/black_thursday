@@ -189,7 +189,7 @@ class SalesAnalystTest < Minitest::Test
 
   def test_total_revenue_by_date_returns_all_revenue_for_a_specifc_date
     date = Time.parse("2012-02-17")
-    assert_equal 21067.77, sa.total_revenue_by_date(date).to_f
+    assert_equal 26356.9, sa.total_revenue_by_date(date).to_f
   end
 
   def test_total_revenue_by_date_returns_big_decimal_class
@@ -199,11 +199,11 @@ class SalesAnalystTest < Minitest::Test
 
   def test_total_returns_sum_of_all_invoices_per_merchant
     merchant = se.merchants.find_by_id(1)
-    assert_equal 0, merchant.revenue
+    assert_equal 35447.74, merchant.revenue.to_f
   end
 
   def test_top_revenue_earners_returns_array_of_requested_amount
-    assert_equal 1, sa.top_revenue_earners(3).count
+    assert_equal 2, sa.top_revenue_earners(3).count
   end
 
   def test_top_revenue_earners_returns_array_of_merchant_instances
@@ -229,19 +229,24 @@ class SalesAnalystTest < Minitest::Test
   def test_merchants_with_only_one_item_registered_in_month_returns_merchants
     assert_equal 1, sa.merchants_with_only_one_item_registered_in_month("March").count
   end
-#################### FIX BELOW TEST
+
   def test_revenue_by_merchant_gives_total_revenue
-    assert_equal 0, sa.revenue_by_merchant(3).to_f
+    assert_equal 35447.74, sa.revenue_by_merchant(1).to_f
   end
-#########
 
   def test_most_sold_item_for_merchant_returns_an_instance_of_item
-    assert_equal Item, sa.most_sold_item_for_merchant(1).class
+    assert_equal Item, sa.most_sold_item_for_merchant(1)[0].class
+  end
+
+  def test_most_sold_items_returns_array_of_items
+    assert_equal 1, sa.most_sold_item_for_merchant(1).count
+  end
+
+  def test_most_sold_item_for_merchant_returns_the_correct_item
+    assert_equal 263519844, sa.most_sold_item_for_merchant(1)[0].id
   end
 
   def test_best_item_for_merchant_returns_item_with_most_revenue
-    skip
-
     assert_equal Item, sa.best_item_for_merchant(1).class
   end
 
