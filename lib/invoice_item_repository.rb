@@ -8,10 +8,6 @@ include CsvLoader
 include Finder
 attr_reader :all
 
-  def inspect
-    "#<#{self.class} #{@all.size} rows>"
-  end
-
   def initialize(invoice_item_file)
     data_into_hash(load_data(invoice_item_file))
   end
@@ -40,5 +36,4 @@ attr_reader :all
   def find_all_by_item_id(item_id)
     all.find_all { |x| x.item_id == item_id }
   end
-
 end

@@ -8,10 +8,6 @@ include Finder
 
 attr_reader  :all
 
-  def inspect
-    "#<#{self.class} #{@all_merchants.size} rows>"
-  end
-
   def initialize(merchant_file)
     data_into_hash(load_data(merchant_file))
   end

@@ -7,10 +7,6 @@ include CsvLoader
 include Finder
 attr_reader :all
 
-  def inspect
-    "#<#{self.class} #{@all.size} rows>"
-  end
-
   def initialize(customer_file)
     data_into_hash(load_data(customer_file))
   end
